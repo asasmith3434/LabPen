@@ -22,13 +22,12 @@ function(error)
 
 var allthedays= function(data){
 
- var eachday= 
-    d3.range(37)
+ var dataDay= 
+   d3.range(37)
     d3.select(".nope")
-    .selectAll("span")
-        .data(eachday)
+    .selectAll("button")
+        .data(dataDay)
         .enter()
-        .append("span")
         .append("button")
         .text(function(d) {return d})
         .on("click", function(d){
@@ -46,10 +45,7 @@ var allthedays= function(data){
  var AllQuizes = data.map(firstPerson)
     
    
- 
- var xScale = THEXScale(AllQuizes)
-    var  yScale = THEYScale(AllQuizes)
-        drawpoints(AllQuizes, xScale, yScale)
+        drawpoints(AllQuizes, THEXScale(AllQuizes), THEYScale(AllQuizes))
  
  })
         
