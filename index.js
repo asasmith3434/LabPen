@@ -7,6 +7,8 @@ penpromise.then(function(data)
     
    allthedays(data)
     console.log(data)
+  
+    
     
     
 }),
@@ -32,18 +34,21 @@ var allthedays= function(data){
         .on("click", function(d){
         
         
-        var firstPerson= function(p,day)
+        var firstPerson= function(data,day)
         {
-            
-           var x = day
-           var y = p.quizes[d].grade
-    
-            return  { x:x, y:y}   }
+            var obj= {}
+            obj.x= day
+            obj.y= data.quizes[d].grade
+            return obj
+         
+           }
     
  var AllQuizes = data.map(firstPerson)
     
-         var xScale = THEXScale(AllQuizes)
-        var  yScale = THEYScale(AllQuizes)
+   
+ 
+ var xScale = THEXScale(AllQuizes)
+    var  yScale = THEYScale(AllQuizes)
         drawpoints(AllQuizes, xScale, yScale)
  
  })
@@ -68,7 +73,7 @@ var allthedays= function(data){
 
 
 
-var screen={width:1000,height:1000}
+var screen={width:800,height:800}
 
 var drawpoints=function(AllQuizes, xScale, yScale)
 {
@@ -86,9 +91,10 @@ var drawpoints=function(AllQuizes, xScale, yScale)
     .data(AllQuizes)
     .enter()
     .append("circle")
-    .attr("cx",function(p){return xScale(p.x)})
-    .attr("cy",function(p){return yScale(p.y)})
+    .attr("cx",function(d){return xScale(d.x)})
+    .attr("cy",function(d){return yScale(d.y)})
     .attr("r",12)
+    .attr("fill", function(d){ return "blue"})
     
 }
 
@@ -115,11 +121,11 @@ var xScale=
 d3.scaleLinear()
  xScale.domain(
  [
-     d3.min(data,function(p){return p.x}),
-     d3.max(data,function(p){return p.x})
+     d3.min(data,function(d){return d.x}),
+     d3.max(data,function(d){return d.x})
  ]
  )
-xScale.range([0,screen.width])
+xScale.range([100,screen.width-50])
 
  return xScale
 }
@@ -140,11 +146,11 @@ var yScale=
 d3.scaleLinear()
  yScale.domain(
  [
-    d3.min(data,function(p){return p.y}),
-     d3.max(data,function(p){return p.y})
+    d3.min(data,function(d){return d.y}),
+     d3.max(data,function(d){return d.y})
  ]
  )
-yScale.range([0,screen.height])
+yScale.range([100,screen.height-400])
 return yScale
     
 }
